@@ -2,6 +2,7 @@ package application;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Scanner;
 
 import db.DB;
 import model.dao.DaoFactory;
@@ -12,6 +13,8 @@ import model.entities.Product;
 public class Program {
 
 	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
 		
 		ProductDao productDao = DaoFactory.createProductDao();
 
@@ -42,6 +45,13 @@ public class Program {
 		product.setName("Smartphone");
 		productDao.update(product);
 		System.out.println("UPDATE COMPLETED");
+		
+		System.out.println("\n== TEST 5: product delete ==");
+		int id = sc.nextInt();
+		productDao.deleteById(id);
+		System.out.println("DELETE COMPLETED");
+		
+		sc.close();
 	}
 
 }
