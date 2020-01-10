@@ -2,6 +2,7 @@ package model.dao;
 
 import java.util.List;
 
+import model.entities.Category;
 import model.entities.Product;
 
 public interface ProductDao {
@@ -11,4 +12,5 @@ public interface ProductDao {
 	void deleteById(Integer id);
 	Product findById(Integer id);
 	List<Product> findAll();
+	List<Product> findByCategory(Category category);
 }
