@@ -16,10 +16,11 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public Product(Integer id, String name, Integer quantity, Double price, Category category) {
+	public Product(Integer id, String name, Double price, Integer quantity, Category category) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		this.quantity = quantity;
 		this.category = category;
 	}
 

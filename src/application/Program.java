@@ -20,7 +20,7 @@ public class Program {
 		System.out.println(product);
 		
 		System.out.println("\n== TEST 2: product findByCategory ==");
-		Category category = new Category(2,null);
+		Category category = new Category(3,null);
 		List<Product> list = productDao.findByCategory(category);
 		for(Product obj : list) {
 			System.out.println(obj);
@@ -31,6 +31,11 @@ public class Program {
 		for(Product obj : list) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("\n== TEST 4: product insert ==");
+		Product newProduct = new Product(null,"Silmarillion", 50.0, 1, category);
+		productDao.insert(newProduct);
+		System.out.println("INSERTED!! New id = " + newProduct.getId());
 	}
 
 }
