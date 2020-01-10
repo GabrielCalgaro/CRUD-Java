@@ -37,7 +37,7 @@ public class Program {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n== TEST 4: product findAllByName==");
+		System.out.println("\n== TEST 4: product findAllByQuantity==");
 		list = productDao.findAllByQuantity();
 		for(Product obj : list) {
 			System.out.println(obj);
