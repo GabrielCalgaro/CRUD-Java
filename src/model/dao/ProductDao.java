@@ -10,7 +10,9 @@ public interface ProductDao {
 	void insert(Product obj);
 	void update(Product obj);
 	void deleteById(Integer id);
+	void deleteByName(String name);
 	Product findById(Integer id);
-	List<Product> findAll();
+	List<Product> findAllByName();
+	List<Product> findAllByQuantity();
 	List<Product> findByCategory(Category category);
 }

@@ -23,32 +23,47 @@ public class Program {
 		System.out.println(product);
 		
 		System.out.println("\n== TEST 2: product findByCategory ==");
-		Category category = new Category(3,null);
+		System.out.println("Digite o id da categoria dos produtos a serem listados:");
+		int catId = sc.nextInt();
+		Category category = new Category(catId,null);
 		List<Product> list = productDao.findByCategory(category);
 		for(Product obj : list) {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n== TEST 3: product findByAll ==");
-		list = productDao.findAll();
+		System.out.println("\n== TEST 3: product findByAllByName==");
+		list = productDao.findAllByName();
 		for(Product obj : list) {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n== TEST 4: product insert ==");
+		System.out.println("\n== TEST 4: product findByAllByName==");
+		list = productDao.findAllByQuantity();
+		for(Product obj : list) {
+			System.out.println(obj);
+		}
+		
+		/*System.out.println("\n== TEST 5: product insert ==");
 		Product newProduct = new Product(null,"Silmarillion", 50.0, 1, category);
 		productDao.insert(newProduct);
-		System.out.println("INSERTED!! New id = " + newProduct.getId());
+		System.out.println("INSERTED!! New id = " + newProduct.getId());*/
 		
-		System.out.println("\n== TEST 5: product update ==");
+		System.out.println("\n== TEST 6: product update ==");
 		product = productDao.findById(1);
 		product.setName("Smartphone");
 		productDao.update(product);
 		System.out.println("UPDATE COMPLETED");
 		
-		System.out.println("\n== TEST 5: product delete ==");
+		System.out.println("\n== TEST 7: product delete ==");
+		System.out.println("Digite o id do produto a ser excluido:");
 		int id = sc.nextInt();
 		productDao.deleteById(id);
+		System.out.println("DELETE COMPLETED");
+		
+		System.out.println("\n== TEST 8: product delete by name==");
+		System.out.println("Digite o nome do produto a ser excluido:");
+		String name = sc.next();
+		productDao.deleteByName(name);
 		System.out.println("DELETE COMPLETED");
 		
 		sc.close();

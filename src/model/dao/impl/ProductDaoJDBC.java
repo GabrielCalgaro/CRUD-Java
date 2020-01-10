@@ -89,7 +89,7 @@ public class ProductDaoJDBC implements ProductDao{
 			DB.closeStatement(st);
 		}
 	}
-
+	
 	@Override
 	public void deleteById(Integer id) {
 		PreparedStatement st = null;
@@ -97,6 +97,24 @@ public class ProductDaoJDBC implements ProductDao{
 			st = conn.prepareStatement("DELETE FROM product WHERE Id = ?");
 			
 			st.setInt(1, id);
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+	}
+	
+	@Override
+	public void deleteByName(String name) {
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM product WHERE Name = ?");
+			
+			st.setString(1, name);
 			
 			st.executeUpdate();
 		}
@@ -155,7 +173,7 @@ public class ProductDaoJDBC implements ProductDao{
 	}
 
 	@Override
-	public List<Product> findAll() {
+	public List<Product> findAllByName() {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -164,6 +182,45 @@ public class ProductDaoJDBC implements ProductDao{
 					+"FROM product INNER JOIN category "
 					+"ON product.CategoryId = category.Id "
 					+"ORDER BY Name");
+			
+			rs = st.executeQuery();
+			
+			List<Product> list = new ArrayList<>();
+			Map<Integer, Category> map = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				Category cat = map.get(rs.getInt("CategoryId"));
+				
+				if (cat == null) {
+					cat = instantiateCategory(rs);
+					map.put(rs.getInt("CategoryId"), cat);
+				}
+				
+				Product obj = instantiateProduct(rs, cat);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+	
+	@Override
+	public List<Product> findAllByQuantity() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT product.*,category.Name as CatName "
+					+"FROM product INNER JOIN category "
+					+"ON product.CategoryId = category.Id "
+					+"ORDER BY Quantity");
 			
 			rs = st.executeQuery();
 			
@@ -233,5 +290,6 @@ public class ProductDaoJDBC implements ProductDao{
 			DB.closeResultSet(rs);
 		}
 	}
+
 
 }
