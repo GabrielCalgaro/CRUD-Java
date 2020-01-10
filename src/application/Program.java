@@ -36,6 +36,12 @@ public class Program {
 		Product newProduct = new Product(null,"Silmarillion", 50.0, 1, category);
 		productDao.insert(newProduct);
 		System.out.println("INSERTED!! New id = " + newProduct.getId());
+		
+		System.out.println("\n== TEST 5: product update ==");
+		product = productDao.findById(1);
+		product.setName("Smartphone");
+		productDao.update(product);
+		System.out.println("UPDATE COMPLETED");
 	}
 
 }

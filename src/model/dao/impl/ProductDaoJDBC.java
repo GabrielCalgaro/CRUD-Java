@@ -67,8 +67,27 @@ public class ProductDaoJDBC implements ProductDao{
 
 	@Override
 	public void update(Product obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE product "
+					+ "SET Name = ?, Price = ?, Quantity = ?, CategoryId = ? "
+					+ "WHERE Id = ?");
+			
+			st.setString(1, obj.getName());
+			st.setDouble(2, obj.getPrice());
+			st.setInt(3, obj.getQuantity());
+			st.setInt(4, obj.getCategory().getId());
+			st.setInt(5, obj.getId());			
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -111,7 +130,7 @@ public class ProductDaoJDBC implements ProductDao{
 		obj.setId(rs.getInt("Id"));
 		obj.setName(rs.getString("Name"));
 		obj.setPrice(rs.getDouble("Price"));
-		obj.setId(rs.getInt("Quantity"));
+		obj.setQuantity(rs.getInt("Quantity"));
 		obj.setCategory(cat);
 		return obj;
 	}
