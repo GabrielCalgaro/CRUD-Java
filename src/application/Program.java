@@ -31,36 +31,42 @@ public class Program {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n== TEST 3: product findByAllByName==");
+		System.out.println("\n== TEST 3: product findAllByName==");
 		list = productDao.findAllByName();
 		for(Product obj : list) {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n== TEST 4: product findByAllByName==");
+		System.out.println("\n== TEST 4: product findAllByName==");
 		list = productDao.findAllByQuantity();
 		for(Product obj : list) {
 			System.out.println(obj);
 		}
 		
-		/*System.out.println("\n== TEST 5: product insert ==");
+		System.out.println("\n== TEST 5: product findMaxAndMinByQuantity==");
+		list = productDao.findMaxAndMinByQuantity();
+		for(Product obj : list) {
+			System.out.println(obj);
+		}
+		
+		System.out.println("\n== TEST 6: product insert ==");
 		Product newProduct = new Product(null,"Silmarillion", 50.0, 1, category);
 		productDao.insert(newProduct);
-		System.out.println("INSERTED!! New id = " + newProduct.getId());*/
+		System.out.println("INSERTED!! New id = " + newProduct.getId());
 		
-		System.out.println("\n== TEST 6: product update ==");
+		System.out.println("\n== TEST 7: product update ==");
 		product = productDao.findById(1);
 		product.setName("Smartphone");
 		productDao.update(product);
 		System.out.println("UPDATE COMPLETED");
 		
-		System.out.println("\n== TEST 7: product delete ==");
+		System.out.println("\n== TEST 8: product delete ==");
 		System.out.println("Digite o id do produto a ser excluido:");
 		int id = sc.nextInt();
 		productDao.deleteById(id);
 		System.out.println("DELETE COMPLETED");
 		
-		System.out.println("\n== TEST 8: product delete by name==");
+		System.out.println("\n== TEST 9: product delete by name==");
 		System.out.println("Digite o nome do produto a ser excluido:");
 		String name = sc.next();
 		productDao.deleteByName(name);

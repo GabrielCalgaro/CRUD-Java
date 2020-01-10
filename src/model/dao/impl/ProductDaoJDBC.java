@@ -291,5 +291,46 @@ public class ProductDaoJDBC implements ProductDao{
 		}
 	}
 
+	@Override
+	public List<Product> findMaxAndMinByQuantity() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT product.*,category.Name as CatName "
+					+"FROM product INNER JOIN category "
+					+"ON product.CategoryId = category.Id "
+					+"WHERE product.Quantity = (SELECT MAX(Quantity) FROM product) "
+					+"OR product.Quantity = (SELECT MIN(Quantity) FROM product)"
+					+"LIMIT 2");
+			
+			rs = st.executeQuery();
+			
+			List<Product> list = new ArrayList<>();
+			Map<Integer, Category> map = new HashMap<>();
+			
+			while (rs.next()) {
+				
+				Category cat = map.get(rs.getInt("CategoryId"));
+				
+				if (cat == null) {
+					cat = instantiateCategory(rs);
+					map.put(rs.getInt("CategoryId"), cat);
+				}
+				
+				Product obj = instantiateProduct(rs, cat);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
+
 
 }

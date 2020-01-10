@@ -14,5 +14,6 @@ public interface ProductDao {
 	Product findById(Integer id);
 	List<Product> findAllByName();
 	List<Product> findAllByQuantity();
+	List<Product> findMaxAndMinByQuantity();
 	List<Product> findByCategory(Category category);
 }
